@@ -2,84 +2,86 @@
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePhotoStore } from '../stores/photos'
-import PhotoModal from '../components/PhotoModal.vue';
-import PhotoGrid from '../components/PhotoGrid.vue';
-import LoadingPlacehoder from '../components/LoadingPlacehoder.vue'
+import PhotoModal from '../components/PhotoModal.vue'
+import PhotoGrid from '../components/PhotoGrid.vue'
+import LoadingPlaceholder from '../components/LoadingPlaceholder.vue'
 
-const route = useRoute();
-const photoStore = usePhotoStore();
-const query = ref(route.query.q);
-const selectedPhoto = ref(null);
-const isModalOpen = ref(false);
-
+const route = useRoute()
+const photoStore = usePhotoStore()
+const query = ref(route.query.q)
+const selectedPhoto = ref(null)
+const isModalOpen = ref(false)
 
 const openModal = (photo) => {
-  selectedPhoto.value = photo;
-  isModalOpen.value = true;
-};
+  selectedPhoto.value = photo
+  isModalOpen.value = true
+}
 
 const closeModal = () => {
-  isModalOpen.value = false;
-};
+  isModalOpen.value = false
+}
 
 const formattedQuery = computed(() => {
-  if (!query.value) return '';
-  return query.value.charAt(0).toUpperCase() + query.value.slice(1);
-});
+  return query.value ? query.value.charAt(0).toUpperCase() + query.value.slice(1) : ''
+})
 
 onMounted(() => {
   if (query.value) {
-    photoStore.getPhotosByQuery(query.value);
+    photoStore.getPhotosByQuery(query.value)
   }
-});
+})
 </script>
 
 <template>
   <div class="container">
     <div class="container__backdrop">
-      <h1>Search Results for: <span class="query">"{{ formattedQuery }}"</span></h1>
+      <h1>
+        Search Results for: <span class="query">"{{ formattedQuery }}"</span>
+      </h1>
     </div>
-    <LoadingPlacehoder v-if="photoStore.loading" />
+    <LoadingPlaceholder v-if="photoStore.loading" />
     <PhotoGrid v-else class="photo-grid" :photos="photoStore.photos" :openModal="openModal" />
     <PhotoModal :photo="selectedPhoto" :isOpen="isModalOpen" @close="closeModal" />
   </div>
 </template>
 
 <style lang="scss">
-h1 {
-  color: $color-primary;
-  font-size: 2.125rem;
-  font-weight: bold;
+.container {
+  .container__backdrop {
+    h1 {
+      color: $color-primary;
+      font-size: 2.125rem;
+      font-weight: bold;
 
-  @media (max-width: 768px) {
-    font-size: 1.75rem;
-  }
+      @media (max-width: 768px) {
+        font-size: 1.75rem;
+      }
 
-  @media (max-width: 480px) {
-    font-size: 1.5rem;
-  }
+      @media (max-width: 480px) {
+        font-size: 1.5rem;
+      }
 
-  @media (max-width: 320px) {
-    font-size: 1rem;
-  }
+      @media (max-width: 320px) {
+        font-size: 1rem;
+      }
 
+      .query {
+        color: $color-secondary;
+        font-weight: bold;
+        font-size: inherit;
 
-  .query {
-    color: $color-secondary;
-    font-weight: bold;
-    font-size: 2.125rem;
+        @media (max-width: 768px) {
+          font-size: inherit;
+        }
 
+        @media (max-width: 480px) {
+          font-size: inherit;
+        }
 
-    @media (max-width: 768px) {
-      font-size: 1.75rem;
-    }
-
-    @media (max-width: 480px) {
-      font-size: 1.5rem;
-    }
-
-    @media (max-width: 320px) {
-      font-size: 1rem;
+        @media (max-width: 320px) {
+          font-size: inherit;
+        }
+      }
     }
   }
 }

@@ -4,6 +4,7 @@ import { usePhotoStore } from '../stores/photos'
 import { useRouter } from 'vue-router'
 import PhotoModal from '../components/PhotoModal.vue'
 import PhotoGrid from '../components/PhotoGrid.vue'
+import LoadingPlaceholder from '../components/LoadingPlaceholder.vue'
 
 const photoStore = usePhotoStore()
 const query = ref('')
@@ -37,12 +38,18 @@ onMounted(() => {
   <div class="container">
     <div class="container__backdrop">
       <div class="container__search-photos">
-        <input class="container__input-elevated" v-model="query" @keyup.enter="fetchPhotos" type="text"
-          placeholder="Search for photo" />
+        <input
+          class="container__input-elevated"
+          v-model="query"
+          @keyup.enter="fetchPhotos"
+          type="text"
+          placeholder="Search for photo"
+        />
       </div>
     </div>
     <div v-if="photoStore.error">{{ photoStore.error }}</div>
-    <PhotoGrid class="photo-grid" :photos="photoStore.loading ? [] : photoStore.photos" :openModal="openModal" />
+    <LoadingPlaceholder v-if="photoStore.loading" />
+    <PhotoGrid v-else class="photo-grid" :photos="photoStore.photos" :openModal="openModal" />
     <PhotoModal :photo="selectedPhoto" :isOpen="isModalOpen" @close="closeModal" />
   </div>
 </template>

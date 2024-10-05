@@ -1,43 +1,21 @@
-<script setup>
-import { defineProps } from 'vue'
-
-const props = defineProps({
-  photos: {
-    type: Array,
-    required: true
-  },
-  openModal: {
-    type: Function,
-    required: true
-  }
-})
-</script>
+<script setup></script>
 
 <template>
   <div class="grid-container">
     <div
-      v-for="(photo, index) in photos"
-      :key="photo.id"
+      v-for="(index, photo) in 9"
+      :key="photo"
       :class="`grid-container__item photo-${(index % 9) + 1}`"
-      @click="() => openModal(photo)"
     >
-      <img
-        :src="photo.urls.small"
-        :alt="photo.alt_description"
-        class="grid-container__photo-item"
-      />
-      <div class="grid-container__overlay"></div>
       <div class="grid-container__photo-item__info">
-        <p class="grid-container__photo-item__info-name">{{ photo.user.name }}</p>
-        <p class="grid-container__photo-item__info-location" v-if="photo.location">
-          {{ photo.location.name }}
-        </p>
+        <p class="grid-container__photo-item__info-name"></p>
+        <p class="grid-container__photo-item__info-location"></p>
       </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .grid-container {
   display: grid;
   gap: 40px;
@@ -52,14 +30,7 @@ const props = defineProps({
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s;
-
-    img {
-      object-fit: cover;
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-    }
+    background-color: #f6f6f6;
 
     &.photo-1,
     &.photo-7,
@@ -78,23 +49,6 @@ const props = defineProps({
     &.photo-8 {
       grid-row: span 4;
     }
-
-    &:hover {
-      transform: scale(1.05);
-    }
-  }
-
-  &__overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.42);
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-    border-radius: 10px;
-    z-index: 1;
   }
 
   &__photo-item__info {
@@ -106,17 +60,16 @@ const props = defineProps({
     z-index: 2;
 
     &-name {
-      font-size: 20px;
+      height: 10px;
+      width: 100px;
+      margin-bottom: 10px;
+      background-color: #e7e7e7;
     }
 
     &-location {
-      font-size: 14px;
-    }
-  }
-
-  &:hover {
-    &__overlay {
-      opacity: 1;
+      height: 10px;
+      width: 80px;
+      background-color: #e7e7e7;
     }
   }
 }

@@ -20,8 +20,8 @@ export const usePhotoStore = defineStore('photos', () => {
       )
       photos.value = data.results
     } catch (err) {
-      console.log(err);
-      
+      console.log(err)
+
       error.value = err.message
     } finally {
       loading.value = false
