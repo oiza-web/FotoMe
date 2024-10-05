@@ -2,6 +2,10 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
+# NOTE - Removed env for security reasons
+
+To make this work locally create your env file and add your own access key, check env.example for guide and visit https://unsplash.com/documentation#creating-a-developer-account to get your access key
+
 ## Description
 
 A photo application that allows you to browse all images and easily search for specific ones
