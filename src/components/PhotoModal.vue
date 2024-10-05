@@ -20,7 +20,7 @@ const closeModal = () => {
       <img :src="photo.urls.regular" :alt="photo.alt_description" class="modal__photo" />
       <div class="modal__photo-details">
         <h2 class="modal__photo-name">{{ photo.user.name }}</h2>
-        <p class="modal__photo-location" v-if="photo.location">{{ photo.location.name }}</p>
+        <p class="modal__photo-location" v-if="photo.user">{{ photo.user.location }}</p>
       </div>
     </div>
   </div>

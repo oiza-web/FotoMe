@@ -15,22 +15,14 @@ const props = defineProps({
 
 <template>
   <div class="grid-container">
-    <div
-      v-for="(photo, index) in photos"
-      :key="photo.id"
-      :class="`grid-container__item photo-${(index % 9) + 1}`"
-      @click="() => openModal(photo)"
-    >
-      <img
-        :src="photo.urls.small"
-        :alt="photo.alt_description"
-        class="grid-container__photo-item"
-      />
+    <div v-for="(photo, index) in photos" :key="photo.id" :class="`grid-container__item photo-${(index % 9) + 1}`"
+      @click="() => openModal(photo)">
+      <img :src="photo.urls.small" :alt="photo.alt_description" class="grid-container__photo-item" />
       <div class="grid-container__overlay"></div>
       <div class="grid-container__photo-item__info">
         <p class="grid-container__photo-item__info-name">{{ photo.user.name }}</p>
-        <p class="grid-container__photo-item__info-location" v-if="photo.location">
-          {{ photo.location.name }}
+        <p class="grid-container__photo-item__info-location" v-if="photo.user">
+          {{ photo.user.location }}
         </p>
       </div>
     </div>
