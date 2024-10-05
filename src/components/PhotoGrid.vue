@@ -15,7 +15,8 @@ const props = defineProps({
 
 <template>
     <div class="grid-container">
-        <div v-for="photo in photos" :key="photo.id" class="grid-container__item" @click="() => openModal(photo)">
+        <div v-for="(photo, index) in photos" :key="photo.id" :class="`grid-container__item photo-${(index % 9) + 1}`"
+            @click="() => openModal(photo)">
             <img :src="photo.urls.small" :alt="photo.alt_description" class="grid-container__photo-item" />
             <div class="grid-container__photo-item__info">
                 <p class="grid-container__photo-item__info-name">{{ photo.user.name }}</p>
@@ -30,66 +31,72 @@ const props = defineProps({
 <style lang="scss">
 .grid-container {
     display: grid;
-    gap: 16px;
-    width: 100%;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 90px;
-    width: 100%;
+    gap: 40px;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 125px;
     padding: 20px 160px;
 
     &__item {
         position: relative;
         cursor: pointer;
         overflow: hidden;
-        border-radius: 8px;
-        transition: transform 0.2s;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         transition: transform 0.3s;
 
+        img {
+            object-fit: cover;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        &.photo-1,
+        &.photo-7,
+        &.photo-9 {
+            grid-row: span 4;
+        }
+
+        &.photo-2,
+        &.photo-5,
+        &.photo-6 {
+            grid-row: span 3;
+        }
+
+        &.photo-3,
+        &.photo-4,
+        &.photo-5 {
+            grid-row: span 3;
+        }
+
         &:hover {
             transform: scale(1.05);
         }
+    }
 
-        &__photo-item {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
+    &__photo-item__info {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        color: white;
+        font-weight: 800;
 
-        &__info {
-            padding: 10px;
-            border-radius: 8px;
-            position: absolute;
-            color: #ffffff;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            text-align: left;
-
-            &-name {
-                font-weight: bold;
-                margin: 0;
-            }
-
-            &-location {
-                margin: 0;
-                font-size: 0.9em;
-                color: #fff;
-            }
+        &-name {
+            font-weight: bold;
         }
     }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 600px) {
     .grid-container {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 800px) {
+@media (min-width: 900px) {
     .grid-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 

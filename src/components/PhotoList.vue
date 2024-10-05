@@ -81,13 +81,13 @@ onMounted(() => {
     background: #ffffff;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path fill='%23838D99' d='M13.22 14.63a8 8 0 1 1 1.41-1.41l4.29 4.29a1 1 0 1 1-1.41 1.41l-4.29-4.29zm-.66-2.07a6 6 0 1 0-8.49-8.49 6 6 0 0 0 8.49 8.49z'></path></svg>");
     background-repeat: no-repeat;
-    background-position: 10px center; // Center the icon vertically
+    background-position: 10px center;
     background-size: 20px 20px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
     border-radius: 5px;
-    width: 700px; 
+    width: 960px;
     padding: 0.5em 1em 0.5em 2.5em;
-    transition: box-shadow 0.3s ease; // Smooth transition for focus effect
+    transition: box-shadow 0.3s ease;
   }
 
   &__input-elevated::placeholder {
@@ -100,13 +100,23 @@ onMounted(() => {
   }
 }
 
+@media (max-width: 768px) {
+  .container__search-photos {
+    padding: 30px;
+  }
+
+  .container__input-elevated {
+    width: 400px; 
+  }
+}
 @media (max-width: 600px) {
   .container__search-photos {
     padding: 30px;
   }
 
   .container__input-elevated {
-    width: 100%; 
+    width: 300px; 
   }
 }
+
 </style>
