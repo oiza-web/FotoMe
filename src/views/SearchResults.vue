@@ -32,12 +32,17 @@ onMounted(() => {
 <template>
   <div class="container">
     <div class="container__backdrop">
-      <h1>Search Results for: {{ query }}</h1>
+      <h1>Search Results for: <span>"{{ query }}"</span></h1>
     </div>
-    <PhotoGrid :photos="photoStore.photos" :openModal="openModal" />
+    <PhotoGrid class="photo-grid" :photos="photoStore.loading ? [] : photoStore.photos" :openModal="openModal" />
     <PhotoModal :photo="selectedPhoto" :isOpen="isModalOpen" @close="closeModal" />
   </div>
 </template>
 
-
-
+<style lang="scss">
+h1 {
+  color: $color-primary;
+  font-size: 34px;
+  font-weight: 600;
+}
+</style>

@@ -37,18 +37,12 @@ onMounted(() => {
   <div class="container">
     <div class="container__backdrop">
       <div class="container__search-photos">
-        <input
-          class="container__input-elevated"
-          v-model="query"
-          @keyup.enter="fetchPhotos"
-          type="text"
-          placeholder="Search for photos"
-        />
+        <input class="container__input-elevated" v-model="query" @keyup.enter="fetchPhotos" type="text"
+          placeholder="Search for photo" />
       </div>
     </div>
-    <div v-if="photoStore.loading">Loading...</div>
     <div v-if="photoStore.error">{{ photoStore.error }}</div>
-    <PhotoGrid :photos="photoStore.photos" :openModal="openModal" />
+    <PhotoGrid class="photo-grid" :photos="photoStore.loading ? [] : photoStore.photos" :openModal="openModal" />
     <PhotoModal :photo="selectedPhoto" :isOpen="isModalOpen" @close="closeModal" />
   </div>
 </template>
@@ -85,7 +79,8 @@ onMounted(() => {
     background-size: 20px 20px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
     border-radius: 5px;
-    width: 960px;
+    width: 1200px;
+    height: 70px;
     padding: 0.5em 1em 0.5em 2.5em;
     transition: box-shadow 0.3s ease;
   }
@@ -100,23 +95,36 @@ onMounted(() => {
   }
 }
 
-@media (max-width: 768px) {
+.photo-grid {
+  margin-top: -96px;
+}
+
+@media (max-width: 1024px) {
   .container__search-photos {
-    padding: 30px;
+    padding: 90px;
   }
 
   .container__input-elevated {
-    width: 400px; 
+    width: 700px;
   }
 }
+@media (max-width: 768px) {
+  .container__search-photos {
+    padding: 90px;
+  }
+
+  .container__input-elevated {
+    width: 400px;
+  }
+}
+
 @media (max-width: 600px) {
   .container__search-photos {
     padding: 30px;
   }
 
   .container__input-elevated {
-    width: 300px; 
+    width: 300px;
   }
 }
-
 </style>

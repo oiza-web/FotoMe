@@ -1,5 +1,4 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
@@ -15,7 +14,10 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/assets/scss/global.scss";`
+        additionalData: `@import "@/assets/scss/global.scss";`,
+        sassOptions: {
+          silenceDeprecations: ['legacy-js-api']
+        }
       }
     }
   }

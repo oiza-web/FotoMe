@@ -18,6 +18,7 @@ const props = defineProps({
         <div v-for="(photo, index) in photos" :key="photo.id" :class="`grid-container__item photo-${(index % 9) + 1}`"
             @click="() => openModal(photo)">
             <img :src="photo.urls.small" :alt="photo.alt_description" class="grid-container__photo-item" />
+            <div class="grid-container__overlay"></div>
             <div class="grid-container__photo-item__info">
                 <p class="grid-container__photo-item__info-name">{{ photo.user.name }}</p>
                 <p class="grid-container__photo-item__info-location" v-if="photo.location">
@@ -55,7 +56,7 @@ const props = defineProps({
         &.photo-1,
         &.photo-7,
         &.photo-9 {
-            grid-row: span 4;
+            grid-row: span 5;
         }
 
         &.photo-2,
@@ -66,8 +67,8 @@ const props = defineProps({
 
         &.photo-3,
         &.photo-4,
-        &.photo-5 {
-            grid-row: span 3;
+        &.photo-8 {
+            grid-row: span 4;
         }
 
         &:hover {
@@ -75,15 +76,39 @@ const props = defineProps({
         }
     }
 
+    &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.42);
+        opacity: 0.6;
+        transition: opacity 0.3s ease;
+        border-radius: 10px;
+        z-index: 1;
+    }
+
     &__photo-item__info {
         position: absolute;
-        bottom: 10px;
-        left: 10px;
+        bottom: 30px;
+        left: 30px;
         color: white;
         font-weight: 800;
+        z-index: 2;
 
         &-name {
-            font-weight: bold;
+            font-size: 20px;
+        }
+
+        &-location{
+            font-size: 14px;
+        }
+    }
+
+    &:hover {
+        &__overlay {
+            opacity: 1;
         }
     }
 }
@@ -91,18 +116,20 @@ const props = defineProps({
 @media (min-width: 600px) {
     .grid-container {
         grid-template-columns: repeat(2, 1fr);
+        padding: 60px;
     }
 }
 
 @media (min-width: 900px) {
     .grid-container {
         grid-template-columns: repeat(3, 1fr);
+        padding: 60px 180px;
     }
 }
 
 @media (max-width: 600px) {
     .grid-container {
-        padding: 8px;
+        padding: 20px;
 
         &__item {
             &__info {
