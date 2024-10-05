@@ -1,9 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePhotoStore } from '../stores/photos'
 import PhotoModal from '../components/PhotoModal.vue';
 import PhotoGrid from '../components/PhotoGrid.vue';
+import LoadingPlacehoder from '../components/LoadingPlacehoder.vue'
 
 const route = useRoute();
 const photoStore = usePhotoStore();
@@ -21,6 +22,10 @@ const closeModal = () => {
   isModalOpen.value = false;
 };
 
+const formattedQuery = computed(() => {
+  if (!query.value) return '';
+  return query.value.charAt(0).toUpperCase() + query.value.slice(1);
+});
 
 onMounted(() => {
   if (query.value) {
@@ -32,9 +37,10 @@ onMounted(() => {
 <template>
   <div class="container">
     <div class="container__backdrop">
-      <h1>Search Results for: <span>"{{ query }}"</span></h1>
+      <h1>Search Results for: <span class="query">"{{ formattedQuery }}"</span></h1>
     </div>
-    <PhotoGrid class="photo-grid" :photos="photoStore.loading ? [] : photoStore.photos" :openModal="openModal" />
+    <LoadingPlacehoder v-if="photoStore.loading" />
+    <PhotoGrid v-else class="photo-grid" :photos="photoStore.photos" :openModal="openModal" />
     <PhotoModal :photo="selectedPhoto" :isOpen="isModalOpen" @close="closeModal" />
   </div>
 </template>
@@ -42,7 +48,39 @@ onMounted(() => {
 <style lang="scss">
 h1 {
   color: $color-primary;
-  font-size: 34px;
-  font-weight: 600;
+  font-size: 2.125rem;
+  font-weight: bold;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 320px) {
+    font-size: 1rem;
+  }
+
+
+  .query {
+    color: $color-secondary;
+    font-weight: bold;
+    font-size: 2.125rem;
+
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
+
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: 320px) {
+      font-size: 1rem;
+    }
+  }
 }
 </style>
