@@ -64,7 +64,7 @@ const props = defineProps({
     &.photo-1,
     &.photo-7,
     &.photo-9 {
-      grid-row: span 5;
+      grid-row: span 4;
     }
 
     &.photo-2,

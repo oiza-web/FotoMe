@@ -40,6 +40,7 @@ onMounted(() => {
       </h1>
     </div>
     <LoadingPlaceholder v-if="photoStore.loading" />
+    <div class="no-results" v-else-if="photoStore.photos.length < 1">No Results found</div>
     <PhotoGrid v-else class="photo-grid" :photos="photoStore.photos" :openModal="openModal" />
     <PhotoModal :photo="selectedPhoto" :isOpen="isModalOpen" @close="closeModal" />
   </div>
@@ -81,6 +82,12 @@ onMounted(() => {
         @media (max-width: 320px) {
           font-size: inherit;
         }
+      }
+
+      .no-results {
+          color: $color-secondary;
+          font-weight: bold;
+          font-size: inherit;
       }
     }
   }

@@ -16,7 +16,7 @@ export const usePhotoStore = defineStore('photos', () => {
 
     try {
       const { data } = await axios.get(
-        `${UNSPLASH_ROOT}/search/photos?query=${query}&client_id=${clientId}&per_page=20`
+        `${UNSPLASH_ROOT}/search/photos?query=${query}&client_id=${clientId}&per_page=27`
       )
       photos.value = data.results
     } catch (err) {
@@ -34,9 +34,9 @@ export const usePhotoStore = defineStore('photos', () => {
 
     try {
       const { data } = await axios.get(
-        `${UNSPLASH_ROOT}/photos/random?client_id=${clientId}&count=10`
+        `${UNSPLASH_ROOT}/search/photos?query=Africa&client_id=${clientId}&per_page=8&order_by=latest`
       )
-      photos.value = data
+      photos.value = data.results
     } catch (err) {
       error.value = err.message
     } finally {
