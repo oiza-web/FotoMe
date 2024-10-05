@@ -2,7 +2,7 @@
 
 This template should help get you started developing with Vue 3 in Vite.
 
-##Description
+## Description
 
 A photo application that allows you to browse all images and easily search for specific ones
 
